@@ -1,7 +1,7 @@
 import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 import Store from 'ember-data/store';
-
+import testInProduction from 'dummy/tests/helpers/test-in-production';
 class TestAdapter {
   constructor(args) {
     Object.assign(this, args);
@@ -38,14 +38,20 @@ module('integration/store - serializerFor', function(hooks) {
     store = owner.lookup('service:store');
   });
 
-  test('when no serializer is available we throw an error', async function(assert) {
+  testInProduction('when no serializer is available we throw an error', async function(assert) {
     let { owner } = this;
     /*
       serializer:-default is the "last chance" fallback and is
-      registered automatically as the json-api serializer.
-      unregistering it will cause serializerFor to return `undefined`.
+      the json-api serializer is re-exported as app/serializers/-default.
+      here we overried to ensure serializerFor will return `undefined`.
      */
-    owner.unregister('serializer:-default');
+    const lookup = owner.lookup;
+    owner.lookup = registrationName => {
+      if (registrationName === 'serializer:-default') {
+        return undefined;
+      }
+      return lookup.call(owner, registrationName);
+    };
     /*
       we fallback to -json-api adapter by default when no other adapter is present.
       This adapter specifies a defaultSerializer. We register our own to ensure

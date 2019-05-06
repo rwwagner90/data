@@ -16,7 +16,7 @@ import OrderedSet from '../ordered-set';
 import ManyArray from '../many-array';
 import { PromiseBelongsTo, PromiseManyArray } from '../promise-proxies';
 import Store from '../store';
-import { errorsHashToArray, errorsArrayToHash } from '../errors-utils';
+import { errorsHashToArray } from '../errors-utils';
 
 import { RecordReference, BelongsToReference, HasManyReference } from '../references';
 import { default as recordDataFor, relationshipStateFor } from '../record-data-for';
