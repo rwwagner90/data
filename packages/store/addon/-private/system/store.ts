@@ -3010,6 +3010,7 @@ class Store extends Service {
     serializer = owner.lookup(`serializer:${normalizedModelName}`);
 
     // getting rid of this case will be handed by the deprecation of moduleFor in ember test helpers
+    // in production this is handled by the re-export
     if (DEBUG && serializer === undefined && normalizedModelName === '-json-api') {
       const Serializer = require('@ember-data/serializer/json-api').default;
       owner.register(`serializer:-json-api`, Serializer);
@@ -3040,6 +3041,7 @@ class Store extends Service {
       : undefined;
 
     // getting rid of this case will be handed by the deprecation of moduleFor in ember test helpers
+    // in production this is handled by the re-export
     if (DEBUG && serializer === undefined && serializerName === '-json-api') {
       const Serializer = require('@ember-data/serializer/json-api').default;
       owner.register(`serializer:-json-api`, Serializer);
@@ -3054,7 +3056,7 @@ class Store extends Service {
     }
 
     // final fallback, no model specific serializer, no application serializer, no
-    // `serializer` property on store: use json-api serializer
+    // `serializer` property on store: use JSON serializer
     serializer = _serializerCache['-default'] || owner.lookup('serializer:-default');
     if (DEBUG && serializer === undefined) {
       const JSONSerializer = require('@ember-data/serializer/json').default;

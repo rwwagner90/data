@@ -1,7 +1,7 @@
 import { DEBUG } from '@glimmer/env';
 import { test, skip } from 'qunit';
 
-export default function testInDebug() {
+export default function testInProduction() {
   if (DEBUG) {
     skip(...arguments);
   } else {

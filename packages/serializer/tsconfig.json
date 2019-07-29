@@ -32,7 +32,9 @@
     "tests/**/*",
     "types/**/*",
     "test-support/**/*",
-    "addon-test-support/**/*"
+    "addon-test-support/**/*",
+    "../-ember-data/app/transforms",
+    "../-ember-data/app/serializers"
   ],
   "exclude": ["node_modules"]
 }
